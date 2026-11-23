@@ -38,4 +38,5 @@ retry, Auto Loader discovery loop) live in `idp_common.py`.
 - Measured in testing: 16 pages in ~102 s, 450 pages in ~348 s from file drop (direct route); parsing dominates.
 
 ## Guidance
-See [`docs/recommendations.md`](docs/recommendations.md) for when to use `ai_query` vs direct calls, test findings and pacer/OTPM tuning.
+- [`docs/document-ai-enrichment-at-scale.md`](docs/document-ai-enrichment-at-scale.md): full write-up, "Document AI Enrichment at Scale: ai_query vs Direct API Calls", with the pipeline diagram, test results and recommendations.
+- [`docs/recommendations.md`](docs/recommendations.md): short-form guidance on when to use `ai_query` vs direct calls, test findings and pacer/OTPM tuning.
