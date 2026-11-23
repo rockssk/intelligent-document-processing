@@ -1,0 +1,70 @@
+{
+  "name": "idp_direct_stream",
+  "description": "IDP direct-API route, always on: Auto Loader on incoming/ -> parallel docs -> Sonnet 4.6 (figures) + Qwen3.5 (tables, doc) with shared pacers",
+  "max_concurrent_runs": 1,
+  "timeout_seconds": 0,
+  "continuous": {
+    "pause_status": "UNPAUSED"
+  },
+  "tasks": [
+    {
+      "task_key": "stream",
+      "environment_key": "default",
+      "spark_python_task": {
+        "python_file": "/Workspace/Shared/idp-sample/idp_stream_direct.py",
+        "source": "WORKSPACE",
+        "parameters": [
+          "--volume",
+          "/Volumes/<catalog>/<schema>/<volume>",
+          "--catalog",
+          "<catalog>",
+          "--schema",
+          "<schema>",
+          "--code_dir",
+          "/Workspace/Shared/idp-sample",
+          "--vision_endpoint",
+          "databricks-claude-sonnet-4-6",
+          "--text_endpoint",
+          "databricks-qwen35-122b-a10b",
+          "--text_reasoning_effort",
+          "none",
+          "--pages_per_chunk",
+          "10",
+          "--poll_seconds",
+          "5",
+          "--labels",
+          "stress_testing,benchmark_testing,model_outputs,other",
+          "--job_id",
+          "{{job.id}}",
+          "--run_id",
+          "{{job.run_id}}",
+          "--vision_otpm",
+          "60000",
+          "--text_otpm",
+          "60000",
+          "--threads",
+          "64",
+          "--max_parallel_docs",
+          "8",
+          "--parse_parallelism",
+          "32",
+          "--call_timeout",
+          "60"
+        ]
+      }
+    }
+  ],
+  "environments": [
+    {
+      "environment_key": "default",
+      "spec": {
+        "environment_version": "4",
+        "dependencies": [
+          "pillow",
+          "requests",
+          "pypdf"
+        ]
+      }
+    }
+  ]
+}

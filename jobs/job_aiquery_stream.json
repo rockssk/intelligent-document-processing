@@ -1,0 +1,60 @@
+{
+  "name": "idp_aiquery_stream",
+  "description": "IDP ai_query route, always on: Auto Loader on incoming_aiq/ -> batched ai_parse_document + ai_query (Sonnet 4.6 figures, Qwen3.5 tables/doc)",
+  "max_concurrent_runs": 1,
+  "timeout_seconds": 0,
+  "continuous": {
+    "pause_status": "UNPAUSED"
+  },
+  "tasks": [
+    {
+      "task_key": "stream",
+      "environment_key": "default",
+      "spark_python_task": {
+        "python_file": "/Workspace/Shared/idp-sample/idp_stream_aiquery.py",
+        "source": "WORKSPACE",
+        "parameters": [
+          "--volume",
+          "/Volumes/<catalog>/<schema>/<volume>",
+          "--catalog",
+          "<catalog>",
+          "--schema",
+          "<schema>",
+          "--code_dir",
+          "/Workspace/Shared/idp-sample",
+          "--vision_endpoint",
+          "databricks-claude-sonnet-4-6",
+          "--text_endpoint",
+          "databricks-qwen35-122b-a10b",
+          "--text_reasoning_effort",
+          "none",
+          "--pages_per_chunk",
+          "10",
+          "--poll_seconds",
+          "5",
+          "--labels",
+          "stress_testing,benchmark_testing,model_outputs,other",
+          "--job_id",
+          "{{job.id}}",
+          "--run_id",
+          "{{job.run_id}}",
+          "--max_parallel_batches",
+          "4"
+        ]
+      }
+    }
+  ],
+  "environments": [
+    {
+      "environment_key": "default",
+      "spec": {
+        "environment_version": "4",
+        "dependencies": [
+          "pillow",
+          "requests",
+          "pypdf"
+        ]
+      }
+    }
+  ]
+}
